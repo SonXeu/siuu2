@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,14 +11,15 @@ class AuthenticatedSessionController extends Controller
     {
         return view('auth.login');
     }
-
+    //hiển thị form đăng nhập
     public function store(Request $request)
     {
+    // xử lý đăng nhập   
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
+//login sucess
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
             return redirect()->intended('/');
@@ -28,7 +29,7 @@ class AuthenticatedSessionController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
-
+//logout
     public function destroy(Request $request)
     {
         Auth::logout();
