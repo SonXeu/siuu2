@@ -1,27 +1,30 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-
 
 class Job extends Model
 {
-    public function up()
-{
-    Schema::create('jobs', function (Blueprint $table) {
-        $table->id();
-        $table->string('title');
-        $table->text('description');
-        $table->string('location');
-        $table->unsignedBigInteger('company_id');
-        $table->timestamps();
+    use HasFactory;
 
-        $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-    });
-}
+    protected $fillable = [
+        'title',
+        'description',
+        'location',
+        'company_id' // Liên kết với Company
+    ];
 
+    // Quan hệ với Company
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 
+    // Quan hệ với Applications
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
 }

@@ -19,7 +19,7 @@ return new class extends Migration
         $table->unsignedBigInteger('user_id');  // Liên kết với bảng users (mỗi kinh nghiệm thuộc về một người dùng)
         $table->timestamps();  // Các trường thời gian (created_at, updated_at)
 
-        // Tạo khóa ngoại liên kết với bảng users
+        // Tạo khóa  liên kết với bảng users
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     });
 }

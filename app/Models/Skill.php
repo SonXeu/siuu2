@@ -2,22 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Skill extends Model
 {
-    public function up()
-{
-    Schema::create('skills', function (Blueprint $table) {
-        $table->id();
-        $table->string('name');
-        $table->unsignedBigInteger('user_id');
-        $table->timestamps();
+    use HasFactory;
 
-        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-    });
-}
+    protected $fillable = [
+        'name',
+        'user_id' // Liên kết với User
+    ];
 
+    // Quan hệ với User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
